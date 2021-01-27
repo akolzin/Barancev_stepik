@@ -74,7 +74,7 @@ def test_example(driver):
     #driver.get("http://media.test.itass.local")
     driver.find_element_by_id("userNameInput").send_keys("ext_kolzin_a")
     time.sleep(1)
-    driver.find_element_by_id("passwordInput").send_keys("Overlor1")
+    driver.find_element_by_id("passwordInput").send_keys("")
     driver.find_element_by_id("submitButton").click()
     time.sleep(2)
     driver.find_element_by_class_name("LGPPtbfSgKkHeKMeSjFv2").click()
