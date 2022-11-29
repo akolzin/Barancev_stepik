@@ -3,6 +3,7 @@ import time
 import requests
 import nltk
 import pyperclip
+import clipboard
 
 from urllib.request import urlopen
 from selenium import webdriver
@@ -29,6 +30,7 @@ def driver(request):
 
 def test_example(driver):
 
+    # авторизация в гугл
     driver.get("https://docs.google.com/document/u/0/?tgif=d")
     driver.find_element(By.XPATH, '//input[@id="identifierId"]').send_keys("htctesttacc@gmail.com") # htctesttacc@gmail.com HTC test_tacc
     driver.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button/span').click()
@@ -37,12 +39,14 @@ def test_example(driver):
     driver.find_element(By.XPATH, '//*[@id="passwordNext"]/div/button/span').click()
     time.sleep(2)
 
+    # скопировать титульник
     driver.get(
-        "https://docs.google.com/document/d/17COE2ug0RdCHsyhtL5dKbVCDEADxs62zE4kg6NFRczY/edit?usp=sharing") # скопировать титульник
+        "https://docs.google.com/document/d/17COE2ug0RdCHsyhtL5dKbVCDEADxs62zE4kg6NFRczY/edit?usp=sharing")
     time.sleep(2)
     webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
     webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("c").perform()
 
+    # создание дока для отчета
     driver.get(
         "https://docs.google.com/document/u/0/?tgif=d") # создание дока для отчета
     driver.find_element(By.XPATH, '//img[@src="https://ssl.gstatic.com/docs/templates/thumbnails/docs-blank-googlecolors.png"]').click()
@@ -50,6 +54,7 @@ def test_example(driver):
     # driver.get(
     #     "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing") # ссылка на документ должна быть расзшарена
 
+    # добавить титульник в созданный документ
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
     time.sleep(2)
@@ -62,6 +67,7 @@ def test_example(driver):
     # time.sleep(1)
     webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()
 
+    # авторизация в киви
     driver.execute_script("window.open('');")
     driver.switch_to.window(driver.window_handles[1])
     driver.get(
@@ -76,16 +82,20 @@ def test_example(driver):
 
     time.sleep(3)
 
-    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:
+    # копирование тест-планов в документ
+    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:  # открыть файл с id тест-планов
         # итерация по строкам
         for line in file1:
-            line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line
+            line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line  # формируется URL тест-плана
 
+            # открыть тест-план
             driver.get(line1)
             time.sleep(2)
+            # нажать "Печатать план"
             resul = driver.find_element(By.XPATH, '//input[@id="btn_print"]')
             resul.click()
 
+            # парсинг спраницы печати
             driver.execute_script("""
                         let element = document.evaluate("//h1/text()", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null); 
                         if (element)
@@ -107,10 +117,12 @@ def test_example(driver):
                             element.parentNode.removeChild(element);
                         """)
 
+            # копирование страницы печати
             time.sleep(3)
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("c").perform()
 
+            # возврат в гугл документу и добавление тест-кейсов в документ
             driver.switch_to.window(driver.window_handles[0])
             time.sleep(2)
             text = pyperclip.paste()
@@ -121,11 +133,66 @@ def test_example(driver):
             time.sleep(2)
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()
             time.sleep(2)
-            webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys(Keys.ENTER).perform()
+            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys(Keys.ENTER).perform()
             driver.switch_to.window(driver.window_handles[1])
     driver.switch_to.window(driver.window_handles[0])
+    current_url1 = driver.current_url
+    # print(current_url1)
+    # driver.close()
+    # time.sleep(1)
+    # driver.close()
+    # time.sleep(3)
+    driver.execute_script("window.open('');")
+    driver.switch_to.window(driver.window_handles[1])
+    driver.get(current_url1)
+    time.sleep(3)
+    # list1 = driver.find_element(By.XPATH, '//*[@id="kix-appview"]/div[7]/div/div[1]/div[1]/div/div[2]')
+    # time.sleep(1)
+    # list1.click()
+    # time.sleep(2)
+
+    i = 0
+    while i < 40:
+        webdriver.ActionChains(driver).send_keys(Keys.DOWN).perform()
+        i = i + 1
+
+    time.sleep(3)
+    list2 = driver.find_element(By.XPATH, '//*[@id="kix-appview"]/div[7]/div/div[4]/div')
     time.sleep(1)
-    driver.find_element(By.XPATH, '//div[@role="button"]').click()
+    list2.click()
+
+    # указать название документа
     time.sleep(1)
-    driver.find_element(By.XPATH, '//input[@class="docs-title-input"]').send_keys("Заявка 20 // Методика тестирования (ПМИ)")
+    title = driver.find_element(By.XPATH, '//*[@id="docs-title-widget"]/input')
+    webdriver.ActionChains(driver).send_keys(Keys.DELETE).perform()
+    title.clear()
+    time.sleep(2)
+    title.send_keys("Заявка 20 // Методика тестирования (ПМИ)")
     print(text)
+
+
+def test_example1233(driver):
+
+    # авторизация в гугл
+    driver.get("https://docs.google.com/document/u/0/?tgif=d")
+    driver.find_element(By.XPATH, '//input[@id="identifierId"]').send_keys(
+        "htctesttacc@gmail.com")  # htctesttacc@gmail.com HTC test_tacc
+    driver.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button/span').click()
+    time.sleep(5)
+    driver.find_element(By.XPATH, '//input[@name="Passwd"]').send_keys("Overlor!22")
+    driver.find_element(By.XPATH, '//*[@id="passwordNext"]/div/button/span').click()
+    time.sleep(2)
+
+    driver.get("https://docs.google.com/document/d/1w7GCeKvQU6JBW0n-K872AXKCoQecjQ-OvAKy3dDbmwo/edit#")
+    time.sleep(1)
+
+    title = driver.find_element(By.XPATH, '//*[@id="docs-title-widget"]/input')
+    webdriver.ActionChains(driver).send_keys(Keys.DELETE).perform()
+    title.clear()
+    time.sleep(2)
+    title.send_keys("Заявка 20 // Методика тестирования (ПМИ)")
+
+    time.sleep(3)
+    # clipboard.copy("Заявка 20 // Методика тестирования (ПМИ)")
+    # title.click()
+    # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()

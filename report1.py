@@ -28,7 +28,7 @@ def driver(request):
     return wd
 
 
-def test_example(driver):
+def test_example(driver):  # копирование названий тест-кейсов и запись в файл
 
     # driver.get(
     #     "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing") # ссылка на документ должна быть расзшарена
@@ -77,6 +77,7 @@ def test_example(driver):
             text = pyperclip.paste()
             res_str = text.replace(', ПОДТВЕРЖДЕНО', '')
             file.write(res_str.strip() + '\n' + '\n')
+            file.write('\n')
             # list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]')
             # list.click()
             # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
@@ -89,7 +90,7 @@ def test_example(driver):
     print(text)
 
 
-def test_example1(driver):
+def test_example1(driver):   # удаление отступов
     file = open("C:\\Users\\akolzin\\Desktop\\пми1.txt", "w")
     with open("C:\\Users\\akolzin\\Desktop\\пми.txt", "r") as file1:
         for line in file1:
@@ -98,7 +99,7 @@ def test_example1(driver):
                 file.write(res_str3.strip() + '\n')
 
 
-def test_example2(driver):
+def test_example2(driver):   # копирование из файла в документ
     with open("C:\\Users\\akolzin\\Desktop\\пми1.txt", "r") as file1:
         driver.get(
             "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing")
