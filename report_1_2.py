@@ -37,8 +37,8 @@ def test_example_ppi(driver):  # копирование названий тес�
     driver.find_element(By.XPATH, '//button[@tabindex="4"]').click()
 
     time.sleep(3)
-    file = open("C:\\Users\\akolzin\\Desktop\\пми.txt", "w")
-    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:
+    file = open("C:\\Users\\akolzin\\Desktop\\пми.txt", "w")  # файл для запись тест-планов
+    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:  # файл с номерами тест-планов
         # итерация по строкам
         for line in file1:
             line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line

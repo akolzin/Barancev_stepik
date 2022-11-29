@@ -135,6 +135,7 @@ def test_example(driver):
             time.sleep(2)
             # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys(Keys.ENTER).perform()
             driver.switch_to.window(driver.window_handles[1])
+    # обновить содержание в документе
     driver.switch_to.window(driver.window_handles[0])
     current_url1 = driver.current_url
     # print(current_url1)
@@ -171,7 +172,7 @@ def test_example(driver):
     print(text)
 
 
-def test_example1233(driver):
+def test_example1233(driver):  # черновой код для теста отдельных функций
 
     # авторизация в гугл
     driver.get("https://docs.google.com/document/u/0/?tgif=d")
