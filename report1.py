@@ -30,10 +30,6 @@ def driver(request):
 
 def test_example(driver):  # копирование названий тест-кейсов и запись в файл
 
-    # driver.get(
-    #     "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing") # ссылка на документ должна быть расзшарена
-    # driver.execute_script("window.open('');")
-    # driver.switch_to.window(driver.window_handles[1])
     driver.get(
         "http://kiwi-interfaces.tass.htc-cs.ru/accounts/login/")
     driver.find_element(By.XPATH, '//input[@id="inputUsername"]').send_keys("akolzin")
@@ -72,20 +68,10 @@ def test_example(driver):  # копирование названий тест-к
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("c").perform()
 
-            # driver.switch_to.window(driver.window_handles[0])
-            # time.sleep(2)
             text = pyperclip.paste()
             res_str = text.replace(', ПОДТВЕРЖДЕНО', '')
             file.write(res_str.strip() + '\n' + '\n')
             file.write('\n')
-            # list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]')
-            # list.click()
-            # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
-            # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
-            # time.sleep(2)
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()
-            # time.sleep(2)
-            # driver.switch_to.window(driver.window_handles[1])
         file.write('\n')
     print(text)
 

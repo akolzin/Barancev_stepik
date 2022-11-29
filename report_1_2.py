@@ -28,12 +28,8 @@ def driver(request):
     return wd
 
 
-def test_example(driver):  # копирование названий тест-кейсов и запись в файл
+def test_example_ppi(driver):  # РєРѕРїРёСЂРѕРІР°РЅРёРµ РЅР°Р·РІР°РЅРёР№ С‚РµСЃС‚-РєРµР№СЃРѕРІ Рё Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р»
 
-    # driver.get(
-    #     "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing") # ссылка на документ должна быть расзшарена
-    # driver.execute_script("window.open('');")
-    # driver.switch_to.window(driver.window_handles[1])
     driver.get(
         "http://kiwi-interfaces.tass.htc-cs.ru/accounts/login/")
     driver.find_element(By.XPATH, '//input[@id="inputUsername"]').send_keys("akolzin")
@@ -41,9 +37,9 @@ def test_example(driver):  # копирование названий тест-кейсов и запись в файл
     driver.find_element(By.XPATH, '//button[@tabindex="4"]').click()
 
     time.sleep(3)
-    file = open("C:\\Users\\akolzin\\Desktop\\пми.txt", "w")
+    file = open("C:\\Users\\akolzin\\Desktop\\РїРјРё.txt", "w")
     with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:
-        # итерация по строкам
+        # РёС‚РµСЂР°С†РёСЏ РїРѕ СЃС‚СЂРѕРєР°Рј
         for line in file1:
             line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line
 
@@ -52,42 +48,44 @@ def test_example(driver):  # копирование названий тест-кейсов и запись в файл
             resul = driver.find_element(By.XPATH, '//input[@id="btn_print"]')
             resul.click()
 
+            #  Р·Р°РїРёСЃСЊ РЅР°Р·РІР°РЅРёСЏ С‚РµСЃС‚-РїР»Р°РЅР°
             list = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/h1/b').text
             file.write(list)
-
-            # driver.execute_script("""
-            #             var element = document.querySelector("div.plan_title > div:nth-child(4)");
-            #             if (element)
-            #                 element.parentNode.removeChild(element);
-            #             """)
-            # driver.execute_script("""
-            #             var element = document.querySelector("body > div:nth-child(2)");
-            #             if (element)
-            #                 element.parentNode.removeChild(element);
-            #             """)
-            # driver.execute_script("""
-            #             var element = document.querySelector("div.contents > h3");
-            #             if (element)
-            #                 element.parentNode.removeChild(element);
-            #             """)
-            #
-            # time.sleep(2)
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("c").perform()
-
-            # driver.switch_to.window(driver.window_handles[0])
-            # time.sleep(2)
-            text = pyperclip.paste()
-            res_str = text.replace(', ПОДТВЕРЖДЕНО', '')
-            file.write(res_str.strip() + '\n' + '\n')
             file.write('\n')
-            # list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]')
-            # list.click()
-            # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
-            # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
-            # time.sleep(2)
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()
-            # time.sleep(2)
-            # driver.switch_to.window(driver.window_handles[1])
-        file.write('\n')
-    print(text)
+
+            #  СЌР»РµРјРµРЅС‚С‹ РЅР°Р·РІР°РЅРёР№ РєРµР№СЃРѕРІ
+            count = driver.find_elements(By.XPATH, '/html/body/div[1]/div[3]/div/ol/li')
+            print(len(count))
+
+            i = 0
+            while i < len(count):  #  Р·Р°РїРёСЃСЊ РЅР°Р·РІР°РЅРёР№ РєРµР№СЃРѕРІ РїРѕСЃР»РµРґРѕРІР°Р»РµР»СЊРЅРѕ
+                ceis = count[i].text
+                ceis_str = ceis.replace(', РџРћР”РўР’Р•Р Р–Р”Р•РќРћ', '')
+                ceis_str3 = ceis_str.split(' ', 1)[-1]
+                file.write(ceis_str3 + '\n')
+                print(ceis_str3)
+                # res_str = ceis_str[:0] + ceis_str[3:]
+                # res_str1 = res_str.replace(':', '', 1)
+                # res_str2 = res_str1.split(' ', 1)
+                # file.write(res_str2[0] + '\n')
+                # print(res_str2[0])
+                i = i + 1
+
+            file.write('\n')
+
+            i = 0
+            while i < len(count):  #  Р·Р°РїРёСЃСЊ РЅРѕРјРµСЂРѕРІ РєРµР№СЃРѕРІ РїРѕСЃР»РµРґРѕРІР°Р»РµР»СЊРЅРѕ
+                ceis = count[i].text
+                ceis_str = ceis.replace(', РџРћР”РўР’Р•Р Р–Р”Р•РќРћ', '')
+                # ceis_str3 = ceis_str.split(' ', 1)[-1]
+                # file.write(ceis_str3 + '\n')
+                # print(ceis_str3)
+                res_str = ceis_str[:0] + ceis_str[3:]
+                res_str1 = res_str.replace(':', '', 1)
+                res_str2 = res_str1.split(' ', 1)
+                file.write(res_str2[0] + '\n')
+                print(res_str2[0])
+                i = i + 1
+
+            file.write('\n')
+    print(list)
