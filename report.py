@@ -58,8 +58,7 @@ def test_example(driver):
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
     time.sleep(2)
-    list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]') # kix-stacked-tile-page-shadow
-    # list = driver.find_element(By.XPATH, '//*[@id="kix-appview"]/div[7]/div/div[1]/div[1]/div/div/canvas')
+    list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]') #
     list.click()
     time.sleep(2)
     # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
@@ -128,29 +127,16 @@ def test_example(driver):
             text = pyperclip.paste()
             list = driver.find_element(By.XPATH, '//canvas[@class="kix-canvas-tile-content"]')
             list.click()
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys(Keys.ENTER).perform()
-            # webdriver.ActionChains(driver).send_keys(Keys.ENTER)
             time.sleep(2)
             webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").perform()
-            time.sleep(2)
-            # webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys(Keys.ENTER).perform()
             driver.switch_to.window(driver.window_handles[1])
     # обновить содержание в документе
     driver.switch_to.window(driver.window_handles[0])
     current_url1 = driver.current_url
-    # print(current_url1)
-    # driver.close()
-    # time.sleep(1)
-    # driver.close()
-    # time.sleep(3)
     driver.execute_script("window.open('');")
     driver.switch_to.window(driver.window_handles[1])
     driver.get(current_url1)
     time.sleep(3)
-    # list1 = driver.find_element(By.XPATH, '//*[@id="kix-appview"]/div[7]/div/div[1]/div[1]/div/div[2]')
-    # time.sleep(1)
-    # list1.click()
-    # time.sleep(2)
 
     i = 0
     while i < 40:
