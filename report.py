@@ -83,7 +83,7 @@ def test_example(driver):
     time.sleep(3)
 
     # копирование тест-планов в документ
-    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:  # открыть файл с id тест-планов
+    with open("reports.txt", "r") as file1:  # открыть файл с id тест-планов
         # итерация по строкам
         for line in file1:
             line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line  # формируется URL тест-плана

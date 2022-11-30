@@ -37,8 +37,8 @@ def test_example(driver):  # копирование названий тест-к
     driver.find_element(By.XPATH, '//button[@tabindex="4"]').click()
 
     time.sleep(3)
-    file = open("C:\\Users\\akolzin\\Desktop\\пми.txt", "w")
-    with open("C:\\Users\\akolzin\\Desktop\\report.txt", "r") as file1:
+    file = open("пми.txt", "w")
+    with open("reports.txt", "r") as file1:
         # итерация по строкам
         for line in file1:
             line1 = "http://kiwi-interfaces.tass.htc-cs.ru/plan/" + line
@@ -77,8 +77,8 @@ def test_example(driver):  # копирование названий тест-к
 
 
 def test_example1(driver):   # удаление отступов
-    file = open("C:\\Users\\akolzin\\Desktop\\пми1.txt", "w")
-    with open("C:\\Users\\akolzin\\Desktop\\пми.txt", "r") as file1:
+    file = open("пми1.txt", "w")
+    with open("пми.txt", "r") as file1:
         for line in file1:
             if len(line) > 1:
                 res_str3 = line.split(' ', 1)[-1]
@@ -86,7 +86,7 @@ def test_example1(driver):   # удаление отступов
 
 
 def test_example2(driver):   # копирование из файла в документ
-    with open("C:\\Users\\akolzin\\Desktop\\пми1.txt", "r") as file1:
+    with open("пми1.txt", "r") as file1:
         driver.get(
             "https://docs.google.com/document/d/1iRIHFmyUdY3xuwhHz6Y7wK0AM_R7t0Mmk_Q6yfHZElo/edit?usp=sharing")
         int_number = file1.read()
